@@ -10,8 +10,6 @@ import java.util.*;
 
 class BottleDispenser {
     private static BottleDispenser bottleDispenser = null;
-    private int bottles;
-    Context context;
     // The array for the Bottle-objects
     private ArrayList<Bottle> bottle_array = new ArrayList<Bottle>();
     private double money;

@@ -1,13 +1,17 @@
 package com.example.vendingmachine;
 
 import android.annotation.SuppressLint;
-import android.media.MediaPlayer;
+import android.content.Context;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.*;
 
 class BottleDispenser {
     private static BottleDispenser bottleDispenser = null;
     private int bottles;
+    Context context;
     // The array for the Bottle-objects
     private ArrayList<Bottle> bottle_array = new ArrayList<Bottle>();
     private double money;
@@ -30,7 +34,6 @@ class BottleDispenser {
         money += amount;
         System.out.println("Klink! Added more money!" + amount);
     }
-
     public String buyBottle(int input) {
         int index = input - 1;
         Bottle bottle = bottle_array.get(index);
@@ -44,7 +47,7 @@ class BottleDispenser {
         else {
             money -= bottle.getBottle_price();
             bottle.decrementQuantity();
-            return "KACHUNK! " + bottle.getName() +  " came out of the dispenser!";
+            return "KACHUNK!" + " Bought a " + bottle.getName() + " for: " + bottle.getBottle_price();
         }
 
 

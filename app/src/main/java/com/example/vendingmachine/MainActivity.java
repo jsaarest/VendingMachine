@@ -6,9 +6,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity implements Dialog.DialogListener {
     Context context = null;
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements Dialog.DialogList
     @SuppressLint("NonConstantResourceId")
     public void buyButtonPress(View v){
         int id = v.getId();
-        String s;
+        String s = "";
         switch(id){
             case R.id.buyBottle1:
                 s = bottleDispenser.buyBottle(1);
@@ -75,6 +79,21 @@ public class MainActivity extends AppCompatActivity implements Dialog.DialogList
                 break;
         }
         balanceField.setText(Double.toString(Math.round(bottleDispenser.getMoneyAmount())));
+        writeReceipt(s);
+    }
+
+    public void writeReceipt(String s){
+        try {
+            OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("receipt.txt", Context.MODE_PRIVATE));
+            ows.write(s);
+            ows.close();
+        }
+        catch(IOException e) {
+            Log.e("IOException", "Error while reading file");
+        }
+        finally {
+            System.out.println("File writed.");
+        }
     }
 
     public void addMoney(double amount){
